@@ -1,0 +1,76 @@
+# Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+!**/src/main/**/*.jar
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Spring Boot
+application-local.yml
+application-secret.yml
+
+# Environment files - NEVER commit these!
+.env
+**/.env
+*.env
+.env.local
+.env.production
+
+# API Keys - extra safety
+*.key
+secrets/
+
+# Node / Frontend
+node_modules/
+dist/
+build/
+.npm
+.pnpm-store/
+frontend/.vite/
+
+# Vite cache
+.vite/
+vite.config.js.timestamp*
+
+# Docker volumes
+mongo_data/
+postgres_data/
+grafana_data/
+docker-volumes/
+
+# OS files
+.DS_Store
+.DS_Store?
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Package manager locks (optional - some teams commit these)
+# package-lock.json
+# yarn.lock

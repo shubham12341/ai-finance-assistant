@@ -1,0 +1,35 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: ai-chat-service
+
+  data:
+    mongodb:
+      uri: mongodb://admin:password@localhost:27017/chatdb?authSource=admin
+      database: chatdb
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: ai-chat-group
+      auto-offset-reset: earliest
+
+  ai:
+    openai:
+      api-key: ${GROQ_API_KEY}
+      base-url: https://api.groq.com/openai
+      chat:
+        options:
+          model: llama-3.1-8b-instant
+          temperature: 0.7
+
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
