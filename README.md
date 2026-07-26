@@ -33,7 +33,7 @@
 ## 🏗️ Architecture
 
 ```
-![Architecture](./Images/financeai_architecture_diagram.png)
+[![Architecture](./Images/financeai_architecture_diagram.png)](https://github.com/shubham12341/ai-finance-assistant/blob/8dfd9b462fa8432a139d6bb04ae64747c1c5bab0/Images/financeai_architecture_diagram.png)
 
 ```
 
