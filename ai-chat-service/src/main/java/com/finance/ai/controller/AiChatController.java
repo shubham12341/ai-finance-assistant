@@ -13,7 +13,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/chat")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "https://ai-finance-assistant.vercel.app",
+        "*"
+})
 public class AiChatController {
 
     private final AiChatService aiChatService;

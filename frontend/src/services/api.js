@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const AUTH_URL = "http://localhost:8081";
-const FINANCE_URL = "http://localhost:8082";
-const CHAT_URL = "http://localhost:8083";
+const AUTH_URL = import.meta.env.VITE_AUTH_URL || "http://localhost:8081";
+const FINANCE_URL = import.meta.env.VITE_FINANCE_URL || "http://localhost:8082";
+const CHAT_URL = import.meta.env.VITE_CHAT_URL || "http://localhost:8083";
 
 export const authAPI = axios.create({
   baseURL: AUTH_URL,
