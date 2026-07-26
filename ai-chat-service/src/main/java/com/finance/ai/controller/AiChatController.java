@@ -2,6 +2,7 @@ package com.finance.ai.controller;
 
 import com.finance.ai.dto.ChatRequest;
 import com.finance.ai.dto.ChatResponse;
+import com.finance.ai.dto.TransactionEvent;
 import com.finance.ai.entity.ChatMessage;
 import com.finance.ai.service.AiChatService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,6 +53,13 @@ public class AiChatController {
         String userId = (String) request
                 .getAttribute("userId");
         aiChatService.clearChatHistory(userId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/internal/transaction")
+    public ResponseEntity<Void> receiveTransaction(
+            @RequestBody TransactionEvent body) {
+        aiChatService.saveTransactionContext(body);
         return ResponseEntity.ok().build();
     }
 }

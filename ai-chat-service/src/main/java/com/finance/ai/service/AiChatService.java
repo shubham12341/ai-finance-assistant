@@ -2,6 +2,7 @@ package com.finance.ai.service;
 
 import com.finance.ai.dto.ChatRequest;
 import com.finance.ai.dto.ChatResponse;
+import com.finance.ai.dto.TransactionEvent;
 import com.finance.ai.entity.ChatMessage;
 import com.finance.ai.entity.TransactionContext;
 import com.finance.ai.repository.ChatMessageRepository;
@@ -149,5 +150,25 @@ public class AiChatService {
                 chatMessageRepository
                         .findByUserIdOrderByTimestampAsc(userId);
         chatMessageRepository.deleteAll(messages);
+    }
+
+    public void saveTransactionContext(
+            TransactionEvent event) {
+        log.info("Received direct HTTP transaction: {}",
+                event.getTransactionId());
+        TransactionContext context =
+                TransactionContext.builder()
+                        .transactionId(event.getTransactionId())
+                        .userId(event.getUserId())
+                        .userEmail(event.getUserEmail())
+                        .title(event.getTitle())
+                        .amount(event.getAmount())
+                        .category(event.getCategory())
+                        .type(event.getType())
+                        .transactionDate(event.getTransactionDate())
+                        .build();
+        transactionContextRepository.save(context);
+        log.info("Transaction context saved for: {}",
+                event.getUserId());
     }
 }

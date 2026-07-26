@@ -10,7 +10,9 @@ import com.finance.core.repository.RecurringTransactionRepository;
 import com.finance.core.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -26,6 +28,15 @@ public class FinanceService {
     private final BudgetRepository budgetRepository;
     private final RecurringTransactionRepository recurringTransactionRepository;
     private final TransactionProducer transactionProducer;
+
+    // ← ADD THESE 3 LINES HERE
+    @Value("${ai.chat.service.url:http://localhost:8083}")
+    private String aiChatServiceUrl;
+
+    @Value("${spring.profiles.active:local}")
+    private String activeProfile;
+
+    private RestTemplate restTemplate = new RestTemplate();
 
     public TransactionResponse addTransaction(
             String userId,
@@ -63,7 +74,15 @@ public class FinanceService {
                 .transactionDate(saved.getTransactionDate())
                 .build();
 
-        transactionProducer.publishTransaction(event);
+        //transactionProducer.publishTransaction(event);
+
+        if ("prod".equals(activeProfile)) {
+            // Production: direct HTTP call
+            notifyAiChatService(event);
+        } else {
+            // Local: use Kafka
+            transactionProducer.publishTransaction(event);
+        }
 
         return TransactionResponse.builder()
                 .id(saved.getId())
@@ -212,6 +231,21 @@ public class FinanceService {
                     r.setActive(false);
                     recurringTransactionRepository.save(r);
                 });
+    }
+    private void notifyAiChatService(
+            TransactionEvent event) {
+        try {
+            restTemplate.postForObject(
+                    aiChatServiceUrl +
+                            "/api/internal/transaction",
+                    event,
+                    Void.class);
+            log.info("AI Chat Service notified: {}",
+                    event.getTransactionId());
+        } catch (Exception e) {
+            log.warn("Could not notify AI Chat: {}",
+                    e.getMessage());
+        }
     }
 
 }
