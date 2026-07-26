@@ -1,7 +1,12 @@
-FROM eclipse-temurin:17-jdk-alpine AS build
+FROM maven:3.9.6-eclipse-temurin-17-alpine AS build
 WORKDIR /app
-COPY . .
-RUN ./mvnw clean package -DskipTests
+
+COPY pom.xml /app/parent-pom.xml
+COPY finance-service/pom.xml .
+COPY finance-service/src ./src
+
+RUN mvn install -f /app/parent-pom.xml -N -DskipTests
+RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
