@@ -33,7 +33,7 @@
 ## 🏗️ Architecture
 
 ```
-![Architecture](Images/financeai_architecture_diagram.png)
+![Architecture](./Images/financeai_architecture_diagram.png)
 
 ```
 
