@@ -1,17 +1,18 @@
+server:
+  port: ${PORT:10000}
+
 spring:
+  application:
+    name: ai-chat-service
+
   data:
     mongodb:
       uri: ${MONGODB_URI}
+      database: chatdb
 
-  kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
-    consumer:
-      group-id: ai-chat-group
-      auto-offset-reset: earliest
-    properties:
-      security.protocol: SASL_SSL
-      sasl.mechanism: SCRAM-SHA-256
-      sasl.jaas.config: ${KAFKA_SASL_JAAS_CONFIG}
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
 
   ai:
     openai:
@@ -24,3 +25,9 @@ spring:
 
 jwt:
   secret: ${JWT_SECRET}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
