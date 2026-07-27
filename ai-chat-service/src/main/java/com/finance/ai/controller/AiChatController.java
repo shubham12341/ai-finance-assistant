@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = {
         "http://localhost:5173",
-        "https://ai-finance-assistant.vercel.app",
+        "https://ai-finance-assistant-sooty.vercel.app",
         "*"
 })
 public class AiChatController {
