@@ -1,10 +1,19 @@
-# Maven
-target/
+# Maven — ignore target folders content
+auth-service/target/
+finance-service/target/
+ai-chat-service/target/
+notification-service/target/
+api-gateway/target/
+
+# Allow deployment JARs specifically
+!auth-service/target/*.jar
+!finance-service/target/*.jar
+!ai-chat-service/target/*.jar
+
+# Class and war files
 *.class
-*.jar
 *.war
 *.ear
-!**/src/main/**/*.jar
 
 # IntelliJ IDEA
 .idea/
@@ -70,7 +79,3 @@ coverage/
 *.temp
 *.swp
 *.swo
-
-# Package manager locks (optional - some teams commit these)
-# package-lock.json
-# yarn.lock
